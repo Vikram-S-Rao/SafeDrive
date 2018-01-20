@@ -27,7 +27,8 @@ def logout():
 @authentication.route('/signup',methods=['GET','POST'])
 def signup():
     Form = SignupForm()
-    user = User(email=Form.email.data,username=Form.username.data,password=Form.password.data)
+    if form.validate_on_submit():
+        user = User(email=Form.email.data,username=Form.username.data,password=Form.password.data)
         db.session.add(user)
         db.session.commit()
         flash('Sign Up Successfull.You can now Login.')
