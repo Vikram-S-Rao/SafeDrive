@@ -1,0 +1,23 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}SAFEDRIVE{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <div class=" col-md-1 col-sm-1 col-xs-1"></div>
+    <div class=" col-md-10 col-xs-10 col-sm-10 grid">
+            <header class=" page-header">
+                    <h1 class="h1 text-center">SAFE DRIVE</h1>
+            </header>
+            <div class="button text-center">
+                    <button class=" btn-primary btn-lg">Unlock Engine</button>
+            </div>
+    </div>
+</div>
+    
+{% endblock %}

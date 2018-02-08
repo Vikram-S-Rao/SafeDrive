@@ -16,7 +16,7 @@ def adduser(email, username, admin=True):
         import sys
         sys.exit('Error: passwords do not match.')
     database.create_all()
-    user = User(email=email, username=username,password = password)
+    user = User(email=email, username=username,password = password,admin = admin)
     database.session.add(user)
     database.session.commit()
     print('User {0} was registered successfully.'.format(username))

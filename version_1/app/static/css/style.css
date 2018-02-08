@@ -1,0 +1,33 @@
+body {
+    text-align: center;
+    align-content: center;
+}
+
+.grid {
+    border-radius: 5%;
+    border: 2px solid lightseagreen;
+    box-shadow: 10px 15px 5px #cbcbcb;
+    padding: 5%;
+    margin-top: 10%;
+}
+
+#option_0,
+#option_1,
+#option_2,
+#option_3 {
+    padding: 3%;
+    margin: 1%;
+    border-radius: 5%;
+    border-style: solid;
+    border-color: white;
+    border: 2px;
+    width: 40%;
+    background: lightseagreen;
+}
+
+#option_0,
+#option_1,
+#option_2,
+#option_3:hover {
+    outline: 0px;
+}

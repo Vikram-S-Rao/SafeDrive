@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block page_content %}
+<div class="col-md-4">
+<div class="page-header">
+    <h1 style="color:orangered">Login</h1>
+</div>
+{{ wtf.quick_form(form) }}
+<br>
+<p>
+New user?
+<a href="{{ url_for('authentication.signup') }}">
+Click here to register
+</a>
+</p>
+</div>
+{% endblock %}

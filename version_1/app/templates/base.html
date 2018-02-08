@@ -1,0 +1,66 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}SAFEDRIVE{% endblock %}
+
+
+
+{% block navbar %}
+<div class="navbar navbar-default" role="navigation" style="background-color:orangered;padding:1%;color:whitesmoke">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" style="color:whitesmoke">SAFEDRIVE</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('safedrive.index') }}" id="col">Home</a></li>
+                {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('safedrive.user', username=current_user.username) }}">Profile</a></li>
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if not current_user.is_authenticated %}
+                    <li><a href="{{ url_for('authentication.login') }}">Login</a></li>
+                    <li><a href="{{ url_for('authentication.signup') }}">Signup</a></li>
+                {% else %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="{{ current_user.gravatar(size=18) }}"> {{ current_user.username }} <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('authentication.logout') }}">Logout</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class=" container-fluid">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    {% block page_content %}{% endblock %}
+</div>
+
+{% block footer %}
+<div class="navbar navbar-default navbar-fixed-bottom" style="background-color:orangered;padding:1%;color:whitesmoke">
+    <h3 class=" h4">This site was developed as a part of Major Project at Siddaganga Institute of technology</h3>
+</div>
+{% endblock %}
+{% endblock %}
+
+
+{% block scripts %}
+{{ super() }}
+{{ moment.include_moment() }}
+{% endblock %}
