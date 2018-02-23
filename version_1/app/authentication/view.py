@@ -38,5 +38,22 @@ def signup():
 
 
 
-
-
+@authentication.route('/register',methods=['GET','POST'])
+def register():
+    username = request.json['Username']
+    email = request.json['Email']
+    password = request.json['Password']
+    phone = request.json['Phone']
+    device = request.json['Device']
+    address = request.json['Address']
+    emergency = request.json['Emergency']
+    user = User(email = email,username = username,password = password,device_id = device,phone_no = phone,address =address,emergency_no = email)
+    database.session.add(user)
+    database.session.commit()
+    return 'ok'
+@authentication.route('/login/<email>/<password>',methods=['GET','POST'])
+def LoginUser(email,password):
+    user = User.query.filter_by(email=email).first()
+    if user is None or not user.verify_password(password):
+        return "Fail"
+    return "Success"

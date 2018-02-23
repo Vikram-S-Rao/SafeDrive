@@ -62,7 +62,7 @@ class Incidents(database.Model):
     id=database.Column(database.Integer,primary_key=True)
     location_lat = database.Column(database.String(10))
     location_long = database.Column(database.String(10))
-    date=database.Column(database.DateTime(),default=datetime.utcnow)
+    date=database.Column(database.DateTime(),default=datetime.now)
     test_Score = database.Column(database.Integer)
     bac = database.Column(database.Integer)
     user_id = database.Column(database.Integer, database.ForeignKey('User.id'))
