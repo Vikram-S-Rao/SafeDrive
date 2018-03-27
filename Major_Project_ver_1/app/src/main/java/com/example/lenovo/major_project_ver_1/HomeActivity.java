@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 public class HomeActivity extends Activity {
     public static final String User = "User_name";
-    String Username;
+    public static String UsrEmail;
     WebView webview;
 
 
@@ -31,7 +31,7 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Intent intent = getIntent();
-        Username = intent.getStringExtra(User);
+        UsrEmail = intent.getStringExtra(User);
         webview = (WebView) findViewById(R.id.Web);
         WebSettings webSettings = webview.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -39,6 +39,7 @@ public class HomeActivity extends Activity {
         webview.setWebViewClient(webViewClient);
         String url = "http://192.168.43.225:80/user/"+User+"/Test";
         webview.loadUrl(url);
+        Toast.makeText(getApplicationContext(),UsrEmail,Toast.LENGTH_LONG).show();
 
 
     }

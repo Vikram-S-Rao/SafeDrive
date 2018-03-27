@@ -1,0 +1,187 @@
+{
+  "project_info": {
+    "project_number": "308025320154",
+    "firebase_url": "https://locationtracker-a95b8.firebaseio.com",
+    "project_id": "locationtracker-a95b8",
+    "storage_bucket": "locationtracker-a95b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:308025320154:android:73b54052699b3017",
+        "android_client_info": {
+          "package_name": "com.example.lenovo.locationtracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "308025320154-p78fv37pg6ncrii48jug9p6p355tkm2g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lenovo.locationtracker",
+            "certificate_hash": "98a13fb2bf4e5752742926a76be9b2b128068c1c"
+          }
+        },
+        {
+          "client_id": "308025320154-0tinvs48glimqf5tbool5onscrdncg9q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADe7TdOdH0htANFgNMHxqN1dDZfMpluQU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "308025320154-0tinvs48glimqf5tbool5onscrdncg9q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:308025320154:android:a554b2fdca37dc8b",
+        "android_client_info": {
+          "package_name": "com.example.lenovo.locationreceiver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "308025320154-s5rh3onlukm1ekpjns3e4k6mffpgrn9l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lenovo.locationreceiver",
+            "certificate_hash": "98a13fb2bf4e5752742926a76be9b2b128068c1c"
+          }
+        },
+        {
+          "client_id": "308025320154-0tinvs48glimqf5tbool5onscrdncg9q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADe7TdOdH0htANFgNMHxqN1dDZfMpluQU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "308025320154-0tinvs48glimqf5tbool5onscrdncg9q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:308025320154:android:a57ad92e2dd25459",
+        "android_client_info": {
+          "package_name": "com.example.lenovo.locationtracker2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "308025320154-mai4vg6759u0qj9sask7f9l9c1ki9fht.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lenovo.locationtracker2",
+            "certificate_hash": "98a13fb2bf4e5752742926a76be9b2b128068c1c"
+          }
+        },
+        {
+          "client_id": "308025320154-0tinvs48glimqf5tbool5onscrdncg9q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADe7TdOdH0htANFgNMHxqN1dDZfMpluQU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "308025320154-0tinvs48glimqf5tbool5onscrdncg9q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:308025320154:android:d69f155dbb56815d",
+        "android_client_info": {
+          "package_name": "com.example.lenovo.major_project_ver_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "308025320154-iel5doo0q318efnlp78fdomvpli73paj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lenovo.major_project_ver_1",
+            "certificate_hash": "98a13fb2bf4e5752742926a76be9b2b128068c1c"
+          }
+        },
+        {
+          "client_id": "308025320154-0tinvs48glimqf5tbool5onscrdncg9q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADe7TdOdH0htANFgNMHxqN1dDZfMpluQU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "308025320154-0tinvs48glimqf5tbool5onscrdncg9q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

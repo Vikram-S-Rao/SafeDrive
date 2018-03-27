@@ -13,9 +13,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import org.apache.http.params.HttpConnectionParams;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.URL;
 
 import java.io.DataOutputStream;
@@ -30,9 +37,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     EditText User, Email, Pass, Addr, Ph_no, device, Emergency;
     Button RegisterBtn;
-    String Username, Email_id, Password, Address, Phone_no, Device_id, Emergency_no;
-    MyDatabase mdb = new MyDatabase(this);
-    Cursor cursor;
+    String Username, Email_id, Password, Address, Phone_no, Device_id, Emergency_no,Token;
+    String StrResponse = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         Emergency = (EditText) findViewById(R.id.EmergencyNumReg);
         device = (EditText) findViewById(R.id.DeviceIdReg);
         RegisterBtn = (Button) findViewById(R.id.buttonReg);
-        mdb.open();
+
 
 
         RegisterBtn.setOnClickListener(new View.OnClickListener() {
@@ -59,21 +66,10 @@ public class RegisterActivity extends AppCompatActivity {
                 Phone_no = Ph_no.getText().toString();
                 Device_id = device.getText().toString();
                 Emergency_no = Emergency.getText().toString();
-
-                ContentValues cv = new ContentValues();
-                cv.put("Email", Email_id);
-                cv.put("Username", Username);
-                cv.put("Password", Password);
-                cv.put("Phone", Phone_no);
-                cv.put("Device", Device_id);
-                cv.put("Emergency", Emergency_no);
+                Token = FirebaseInstanceId.getInstance().getToken();
+                SendData();
 
 
-                mdb.UserInsert(cv);
-
-                Toast.makeText(getApplicationContext(), "Sign up Successful", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                startActivity(intent);
 
             }
         });
@@ -88,10 +84,11 @@ public class RegisterActivity extends AppCompatActivity {
             postData.put("Username", Username);
             postData.put("Password", Password);
             postData.put("Phone", Phone_no);
+            postData.put("Address",Address);
             postData.put("Device", Device_id);
             postData.put("Emergency", Emergency_no);
-
-            new AsyncRegister().execute("http://52.88.194.67:8080/IOTProjectServer/registerDevice", postData.toString());
+            postData.put("Token",Token);
+            new AsyncRegister().execute("http://192.168.43.225:5000/register", postData.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -108,20 +105,23 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
-            String data = "";
+
 
             HttpURLConnection httpURLConnection = null;
             try {
 
                 httpURLConnection = (HttpURLConnection) new URL(params[0]).openConnection();
                 httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setRequestProperty("Content-Type", "application/json");
+                httpURLConnection.setRequestProperty("Accept", "application/json");
 
                 httpURLConnection.setDoOutput(true);
+                Writer writer = new BufferedWriter(new OutputStreamWriter(httpURLConnection.getOutputStream(), "UTF-8"));
+                writer.write(params[1]);
+// json data
+                writer.close();
 
-                DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
-                wr.writeBytes("PostData=" + params[1]);
-                wr.flush();
-                wr.close();
+
 
                 InputStream in = httpURLConnection.getInputStream();
                 InputStreamReader inputStreamReader = new InputStreamReader(in);
@@ -130,7 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
                 while (inputStreamData != -1) {
                     char current = (char) inputStreamData;
                     inputStreamData = inputStreamReader.read();
-                    data += current;
+                    StrResponse += current;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -140,14 +140,33 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
 
-            return data;
+            return StrResponse;
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            Log.e("TAG", result); // this is expecting a response code to be sent from your server upon receiving the POST data
+        protected void onPostExecute(String results)
+        {
+            if(StrResponse.equals("Success")) {
+                Toast.makeText(getApplicationContext(), "Sign up Successful", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+            else if(StrResponse.equals("ERR_EMAIL"))
+            {
+                Toast.makeText(getApplicationContext(),"Email Id already exists",Toast.LENGTH_LONG).show();
+            }
+            else if(StrResponse.equals("ERR_USERNAME"))
+            {
+                Toast.makeText(getApplicationContext(),"Username already exists",Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(),"Something Went Wrong",Toast.LENGTH_LONG).show();
+            }
         }
+
+
+
     }
 
 

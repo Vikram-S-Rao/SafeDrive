@@ -1,24 +1,31 @@
 {% extends "base.html" %}
 
 {% block page_content %}
-<div class="page-header user-profile">
-    <div class="user-avatar" style="margin:2%;"><img src="{{ user.gravatar(128) }}">
+<div class=" container-fluid">
+<div class=" list-group page-header user-profile">
+    <div class=" list-group-item-heading user-avatar" style="margin:2%;"><img src="{{ user.gravatar(128) }}">
         {% if current_user == user %}<a class="btn btn-default pull-right" href="{{ url_for('safedrive.profile') }}">Edit Profile</a>{% endif %}
         <h1 class=" h1" style="color:orangered;display:inline-block;margin:2%;" >{{ user.username }}</h1>
     </div>
     
-    <div class=" text-justify" style="margin:2%;">
-        {% if user.name %}<h4 class="h4"><span style="color:orangered">Name : </span>{{ user.name }}</h4> {% endif %}
+    <div class="text-justify" style="margin:2%;">
+        {% if user.name %}<h4 class="h4 list-group-item"><span style="color:orangered">Name : </span>{{ user.name }}</h4> {% endif %}
         
-        {% if user.email %}<h4 class="h4"><span style="color:orangered">E-mail : </span>{{ user.email }}</h4> {% endif %}
+        {% if user.email %}<h4 class="h4 list-group-item"><span style="color:orangered">E-mail : </span>{{ user.email }}</h4> {% endif %}
        
-        {% if user.device_id %}<h4 class="h4"><span style="color:orangered">Device-Id : </span>{{ user.device_id }}</h4> {% endif %}
-    
-        {% if user.phone_no %}<h4 class="h4" ><span style="color:orangered">Phone Number : </span>{{ user.phone_no }}</h4> {% endif %}
-  
-        {% if user.emergency_no %}<h4 class="h4"><span style="color:orangered">Emergency Number : </span>{{ user.emergency_no }}</h4> {% endif %}
+        {% if user.age %}<h4 class="h4 list-group-item"><span style="color:orangered">Age : </span>{{ user.age }}</h4> {% endif %}
         
-        {% if user.address %}<h4 class="h4"><span style="color:orangered">Address : </span>{{ user.address }}</h4> {% endif %}
+        {% if user.gender %}<h4 class="h4 list-group-item"><span style="color:orangered">Gender : </span>{{ user.gender }}</h4> {% endif %}
+        
+        {% if user.vehicle_no %}<h4 class="h4 list-group-item"><span style="color:orangered">Vehicle Registration Number : </span>{{ user.vehicle_no }}</h4> {% endif %}
+        
+        {% if user.device_id %}<h4 class="h4 list-group-item"><span style="color:orangered">Device-Id : </span>{{ user.device_id }}</h4> {% endif %}
+    
+        {% if user.phone_no %}<h4 class="h4 list-group-item" ><span style="color:orangered">Phone Number : </span>{{ user.phone_no }}</h4> {% endif %}
+  
+        {% if user.emergency_no %}<h4 class="h4 list-group-item"><span style="color:orangered">Emergency Number : </span>{{ user.emergency_no }}</h4> {% endif %}
+        
+        {% if user.address %}<h4 class="h4 list-group-item"><span style="color:orangered">Address : </span>{{ user.address }}</h4> {% endif %}
         
     </div>
    
@@ -26,4 +33,20 @@
     
 </div>
 
+{% include "safedrive/Incidents.html" %}
+{% if incidents %}
+<ul class="pager">
+    {% if pagination.has_prev %}
+    <li class="previous"><a href="{{ url_for('safedrive.user', username=user.username, page=pagination.prev_num) }}">&larr; Newer</a></li>
+    {% else %}
+    <li class="previous disabled"><a href="#">&larr; Newer</a></li>
+    {% endif %}
+    {% if pagination.has_next %}
+    <li class="next"><a href="{{ url_for('safedrive.user', username=user.username, page=pagination.next_num) }}">Older &rarr;</a></li>
+    {% else %}
+    <li class="next disabled"><a href="#">Older &rarr;</a></li>
+    {% endif %}
+</ul>
+{% endif %}
+</div>
 {% endblock %}

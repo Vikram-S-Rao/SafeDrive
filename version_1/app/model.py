@@ -1,4 +1,5 @@
 from datetime import datetime
+import calendar
 import hashlib
 from .import database,login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -14,11 +15,15 @@ class User(UserMixin,database.Model):
     name = database.Column(database.String(64))
     password_hash = database.Column(database.String(128))
     device_id = database.Column(database.String(16))
+    vehicle_no = database.Column(database.String(15))
+    age = database.Column(database.Integer)
+    gender = database.Column(database.String(10))
     phone_no = database.Column(database.String(10))
     emergency_no = database.Column(database.String(10))
     address = database.Column(database.String(128))
     admin = database.Column(database.Boolean) 
     avatar_hash = database.Column(database.String(32))
+    token = database.Column(database.String(1024))
     incidents = database.relationship('Incidents', lazy='dynamic', backref='user')
 
     def __init__(self, **kwargs):
@@ -63,7 +68,32 @@ class Incidents(database.Model):
     location_lat = database.Column(database.String(10))
     location_long = database.Column(database.String(10))
     date=database.Column(database.DateTime(),default=datetime.now)
+    day = database.Column(database.String(10))
+    time = database.Column(database.Integer)
     test_Score = database.Column(database.Integer)
     bac = database.Column(database.Integer)
+    country = database.Column(database.String(30))
+    city = database.Column(database.String(30))
+    locality = database.Column(database.String(1024))
+    current_in = database.Column(database.Boolean)
     user_id = database.Column(database.Integer, database.ForeignKey('User.id'))
     
+class Tracker(database.Model):
+    id = database.Column(database.Integer, primary_key=True)
+    email = database.Column(database.String(64),nullable=False, unique=True, index=True)
+    username = database.Column(database.String(64),nullable=False, unique=True, index=True)
+    password_hash = database.Column(database.String(128))
+    tracker_id= database.Column(database.String(64),database.ForeignKey('User.email'))
+    token = database.Column(database.String(1024))
+
+
+    @property
+    def password(self):
+        raise AttributeError('Password is not a readable attribute')
+
+    @password.setter
+    def password(self,password):
+        self.password_hash = generate_password_hash(password)
+
+    def verify_password(self,password):
+        return check_password_hash(self.password_hash,password)

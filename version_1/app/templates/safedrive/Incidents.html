@@ -1,0 +1,7 @@
+<ul class="incident-list">
+    {% for incident in incidents %}
+        <li class="incident">
+        {% include "safedrive/Incident_header.html" %}
+        </li>
+    {% endfor %}
+    </ul>

@@ -1,0 +1,7 @@
+<div class="Incident-header">
+    <div class="pull-right"><a href="{{ url_for('safedrive.incident', id=incident.id) }}"><span class="label label-default">View</span></a></div>
+    
+    <h2><a href="{{ url_for('safedrive.incident', id=incident.id) }}">INCIDENT ID {{ incident.id }}</a></h2>    
+    <h3>Date: {{ incident.date }}</h3>
+    
+</div>

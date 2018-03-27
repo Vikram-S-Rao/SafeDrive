@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+
+{% block page_content %}
+<div class="page-header">
+    {% include "safedrive/Incident_header.html" %}
+</div>
+<div class="incident-body">
+   <div class=" list-group text-justify">
+    {% if incident.time %}<h4 class="h4 list-group-item"><span style="color:orangered">Time : </span>{{ incident.time }}</h4> {% endif %}
+    {% if incident.day %}<h4 class="h4 list-group-item"><span style="color:orangered">Day of Week : </span>{{ incident.day }}</h4> {% endif %}
+    {% if incident.test_Score %}<h4 class="h4 list-group-item"><span style="color:orangered">Test Score : </span>{{ incident.test_Score }}</h4> {% endif %}
+    {% if incident.bac %}<h4 class="h4 list-group-item"><span style="color:orangered">BAC : </span>{{ incident.bac }}</h4> {% endif %}
+    {% if incident.locality %}<h4 class="h4 list-group-item"><span style="color:orangered">Locality : </span>{{ incident.locality }}</h4> {% endif %}
+    {% if incident.city %}<h4 class="h4 list-group-item"><span style="color:orangered">City : </span>{{ incident.city }}</h4> {% endif %}
+    {% if incident.state %}<h4 class="h4 list-group-item"><span style="color:orangered">State : </span>{{ incident.state }}</h4> {% endif %}
+    
+    <div id="googleMap" style="width:95%;height:40vh;margin:50px;"></div>
+
+   </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+
+
+<script>
+function myMap() {
+    center=new google.maps.LatLng({{ incident.location_lat }},{{ incident.location_long}})
+var mapProp= {
+    center:new google.maps.LatLng({{ incident.location_lat }},{{ incident.location_long}}),
+    zoom:15,
+};
+var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+var marker = new google.maps.Marker({position:center});
+
+marker.setMap(map); 
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key= AIzaSyAlvr8_x1kMiIcm2WGFlbIPdPOUB6X7j34&callback=myMap"></script>
+
+{% endblock %}

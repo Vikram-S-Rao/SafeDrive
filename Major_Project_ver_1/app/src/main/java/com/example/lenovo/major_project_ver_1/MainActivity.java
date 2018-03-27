@@ -22,29 +22,33 @@ import java.net.URL;
 
 public class MainActivity extends Activity {
 
-    EditText UsernameText,PasswordText;
+    EditText EmailText,PasswordText;
     Button LoginButton;
-    String Username,Password;
+    String Email,Password;
     TextView reg;
-    MyDatabase mdb = new MyDatabase(MainActivity.this);
-    Cursor cursor;
-
-    String StrUrl,StrResponse;
+    String StrUrl,StrResponse="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        UsernameText = (EditText) findViewById(R.id.Username);
+        EmailText = (EditText) findViewById(R.id.Username);
         PasswordText = (EditText) findViewById(R.id.Password);
         LoginButton = (Button) findViewById(R.id.Login_button);
         reg = findViewById(R.id.Register);
-        mdb.open();
+
 
         LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Username = UsernameText.getText().toString();
+                Email = EmailText.getText().toString();
                 Password = PasswordText.getText().toString();
+                StrUrl = "http://192.168.43.225:5000/login/"+Email+"/"+Password ;
+
+                User user = (User)getApplicationContext();
+                user.setEmail(Email);
+                /*Intent intent = new Intent(MainActivity.this,MenuActivity.class);
+                intent.putExtra(HomeActivity.User,Email);
+                startActivity(intent);*/
                 new AsnycLogin().execute();
 
             }
@@ -81,11 +85,23 @@ public class MainActivity extends Activity {
             return null;
         }
 
+
         @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            Log.e("TAG", result); // this is expecting a response code to be sent from your server upon receiving the POST data
+        protected void onPostExecute(String results)
+        {
+            if(StrResponse.equals("Success"))
+            {
+                Intent intent = new Intent(MainActivity.this,MenuActivity.class);
+                intent.putExtra(HomeActivity.User,Email);
+                startActivity(intent);
+            }
+            else {
+                Toast.makeText(getApplicationContext(),"Something Went Wrong",Toast.LENGTH_LONG).show();
+            }
+
         }
+
+
 
 
     }
