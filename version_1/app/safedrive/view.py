@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, abort,\
     request, current_app
 from flask_login import login_required, current_user
 from .. import database
-from ..model import User,Incidents,Tracker
+from ..model import User,Incidents,Tracker,SuspectedUser
 from . import safedrive
 from .form import ProfileForm
 from bokeh.plotting import figure
@@ -205,14 +205,14 @@ def loc_plot():
 
 @safedrive.route('/user/testresult',methods=['GET','POST'])
 def result():
-    email = request.json['Email']
-    score = request.json['Score']
-    country = request.json['Country']
-    city = request.json['City']
-    locality = request.json['Locality']
-    latitude = request.json['Latitude']
-    longitude = request.json['Longitude']
-    user = User.query.filter_by(email=email).first()
+    email = request.json['EMAIL']
+    score = request.json['SCORE']
+    country = request.json['COUNTRY']
+    city = request.json['CITY']
+    locality = request.json['LOCALITY']
+    latitude = request.json['LATITUDE']
+    longitude = request.json['LONGITUDE']
+    user = User.query.filter_by(username=email).first()
     day = calendar.day_name[datetime.today().weekday()]
     cur_time = time.strftime("%H")
     incident = Incidents(location_lat =latitude,location_long = longitude,country = country,city = city,locality=locality,day = day,time=cur_time, test_Score = score,user_id = user.id)
@@ -221,7 +221,7 @@ def result():
     tracker = Tracker.query.filter_by(tracker_id = email).first()
     reg_id = tracker.token
     msg_head = "SAFE DRIVE"
-    msg_body = user.name + " is not in a condition to drive. Please pick him up."
+    msg_body = user.username + " is not in a condition to drive. Please pick him up."
     send_notification(msg_head,msg_body,reg_id)
     #msg = user.name + " is not in a condition to drive please pick him up"
     #sms(msg,user.emergency_no)
@@ -231,8 +231,34 @@ def result():
 def Token():
     email = request.json['Email']
     token = request.json['Token']
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(email=username).first()
     user.token = token 
     database.session.commit()
-    return "Success"
+    return "SUCCESS"
 
+@safedrive.route('/user/suspected/<deviceid>')
+def Suspect(deviceid):
+    print deviceid
+    user = User.query.filter_by(device_id=deviceid).first()
+    suspect = SuspectedUser(username=user.username)
+    database.session.add(suspect)
+    database.session.commit()
+    reg_id = user.token
+    msg_head = "SAFE DRIVE"
+    msg_body ="Alcohol was detected in your system and hence your Engine has been locked.Please take sobriety test to continue"
+    send_notification(msg_head,msg_body,reg_id)
+    return "SUCCESS"
+
+@safedrive.route('/user/verifysuspect',methods=['GET','POST'])
+def VerifySuspect():
+    usrname = request.json['USERNAME']
+    if SuspectedUser.query.filter_by(username = usrname).first():
+        return "VERIFIED"
+    return "NOT"
+
+@safedrive.route('/user/unlock/<device_id>')
+def Unlock(device_id):
+    user = User.query.filter_by(device_id=device_id).first()
+    SuspectedUser.query.filter_by(username = user.username).delete()
+    database.session.commit()
+    return 'SUCCESS'

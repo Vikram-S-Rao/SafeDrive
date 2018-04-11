@@ -40,13 +40,13 @@ def signup():
 
 @authentication.route('/register',methods=['GET','POST'])
 def register():
-    username = request.json['Username']
-    email = request.json['Email']
-    password = request.json['Password']
-    phone = request.json['Phone']
-    device = request.json['Device']
-    token = request.json['Token']
-    emergency = request.json['Emergency']
+    username = request.json['USERNAME']
+    email = request.json['EMAIL']
+    password = request.json['PASSWORD']
+    phone = request.json['PHONE']
+    device = request.json['DEVICE']
+    token = request.json['TOKEN']
+    emergency = request.json['EMERGENCY']
     if User.query.filter_by(email=email).first():
         return "ERR_EMAIL"
     if User.query.filter_by(username=username).first():
@@ -54,21 +54,21 @@ def register():
     user = User(email = email,username = username,password = password,device_id = device,phone_no = phone,emergency_no = emergency,token = token)
     database.session.add(user)
     database.session.commit()
-    return "Success"
-@authentication.route('/login/<email>/<password>',methods=['GET','POST'])
-def LoginUser(email,password):
-    user = User.query.filter_by(email=email).first()
+    return "SUCCESS"
+@authentication.route('/login/<username>/<password>',methods=['GET','POST'])
+def LoginUser(username,password):
+    user = User.query.filter_by(username=username).first()
     if user is None or not user.verify_password(password):
-        return "Fail"
-    return "Success"
+        return "FAIL"
+    return "SUCCESS"
 
 @authentication.route('/track/register',methods=['GET','POST'])
 def TrackerRegister():
-    username = request.json['Username']
-    email = request.json['Email']
-    password = request.json['Password']
-    tracker_id = request.json['Tracker_id']
-    token = request.json['Token']
+    username = request.json['USERNAME']
+    email = request.json['EMAIL']
+    password = request.json['PASSWORD']
+    tracker_id = request.json['TRACKER_ID']
+    token = request.json['TOKEN']
     if Tracker.query.filter_by(email=email).first():
         return "ERR_EMAIL"
     if Tracker.query.filter_by(username=username).first():
@@ -76,11 +76,11 @@ def TrackerRegister():
     tracker = Tracker(email = email,username = username,password = password,tracker_id = tracker_id,token = token)
     database.session.add(tracker)
     database.session.commit()
-    return "Success"
+    return "SUCCESS"
 
-@authentication.route('/track/login/<email>/<password>',methods=['GET','POST'])
-def LoginTracker(email,password):
-    tracker = Tracker.query.filter_by(email=email).first()
+@authentication.route('/track/login/<username>/<password>',methods=['GET','POST'])
+def LoginTracker(username,password):
+    tracker = Tracker.query.filter_by(username=username).first()
     if tracker is None or not tracker.verify_password(password):
-        return "Fail"
-    return "Success"
+        return "FAIL"
+    return "SUCCESS"

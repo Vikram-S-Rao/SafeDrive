@@ -83,7 +83,7 @@ class Tracker(database.Model):
     email = database.Column(database.String(64),nullable=False, unique=True, index=True)
     username = database.Column(database.String(64),nullable=False, unique=True, index=True)
     password_hash = database.Column(database.String(128))
-    tracker_id= database.Column(database.String(64),database.ForeignKey('User.email'))
+    tracker_id= database.Column(database.String(64),database.ForeignKey('User.username'))
     token = database.Column(database.String(1024))
 
 
@@ -97,3 +97,7 @@ class Tracker(database.Model):
 
     def verify_password(self,password):
         return check_password_hash(self.password_hash,password)
+
+class SuspectedUser(database.Model):
+    id = database.Column(database.Integer, primary_key=True)
+    username = database.Column(database.String(64),database.ForeignKey('User.username'))
