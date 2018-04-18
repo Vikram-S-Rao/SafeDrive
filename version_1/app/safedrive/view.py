@@ -18,6 +18,7 @@ from notify import send_notification,sms
 import urllib2
 import cookielib
 import collections
+import paho.mqtt.client as paho
 
 TestUser = "None"
 
@@ -263,4 +264,8 @@ def Unlock(device_id):
     user = User.query.filter_by(device_id=device_id).first()
     SuspectedUser.query.filter_by(username = user.username).delete()
     database.session.commit()
+    client = paho.Client()
+    client.connect("iot.eclipse.org", 1883)
+    client.publish("SafeDrive/Unlock", str(user.device_id), qos=1)
+    client.disconnect()
     return 'SUCCESS'
