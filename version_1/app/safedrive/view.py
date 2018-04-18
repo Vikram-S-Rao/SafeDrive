@@ -102,7 +102,7 @@ def analytics():
     script2,div2= components(plot)
 
     source,day,count = day_plot() 
-    plot = figure(x_range=['Monday','Tuesday','Wednesday','Thrusday','Friday','Saturday','Sunday'],y_range=(0,10) ,plot_height=450,plot_width=450, title="Day of the Week Plot",
+    plot = figure(x_range=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],y_range=(0,10) ,plot_height=450,plot_width=450, title="Day of the Week Plot",
            toolbar_location=None, tools="")
     plot.vbar(x='day', top='count', width=0.9, color='color', legend="day", source=source)
     plot.xgrid.grid_line_color = None
@@ -205,6 +205,7 @@ def loc_plot():
 
 @safedrive.route('/user/testresult',methods=['GET','POST'])
 def result():
+    
     email = request.json['EMAIL']
     score = request.json['SCORE']
     country = request.json['COUNTRY']
@@ -218,13 +219,14 @@ def result():
     incident = Incidents(location_lat =latitude,location_long = longitude,country = country,city = city,locality=locality,day = day,time=cur_time, test_Score = score,user_id = user.id)
     database.session.add(incident)
     database.session.commit()
-    tracker = Tracker.query.filter_by(tracker_id = email).first()
-    reg_id = tracker.token
-    msg_head = "SAFE DRIVE"
-    msg_body = user.username + " is not in a condition to drive. Please pick him up."
-    send_notification(msg_head,msg_body,reg_id)
-    #msg = user.name + " is not in a condition to drive please pick him up"
-    #sms(msg,user.emergency_no)
+    #tracker = Tracker.query.filter_by(tracker_id = email).first()
+    #reg_id = tracker.token
+    #msg_head = "SAFE DRIVE"
+    #msg_body = user.username + " is not in a condition to drive. Please pick him up."
+    #send_notification(msg_head,msg_body,reg_id)
+    msg = "SAFE DRIVE\n\n"+user.username + " is not in a condition to drive.\n"+"please pick him up\n"+"You can track his location at below link\n"
+    msg = msg+"http://maps.google.com/?q="+str(latitude)+","+str(longitude)
+    sms(msg,user.emergency_no)
     return 'Success'
     
 @safedrive.route('/user/token')

@@ -1,23 +1,17 @@
 from pyfcm import FCMNotification
+import urllib2
+import cookielib
+from getpass import getpass
+import sys
+import os
+from stat import *
 
 
 def send_notification(message_title,message_body,registration_id):
     push_service = FCMNotification(api_key="AAAAR7e9Yto:APA91bFqvc6jMbYxYBgi0MhIpRU7PGJT_OrZiKovULXJSm3tvYFt6R41XrTyikJenL0xw0HoFEzlC8KeqV4oULTpHPQSUmE49pjVCKyhKptvf3rHKPmXzk_s-wcOqAskzohic2y-3HxF")
     result = push_service.notify_single_device(registration_id=registration_id, message_title=message_title, message_body=message_body)
-# OR initialize with proxies
 
-#proxy_dict = {
-#          "http"  : "http://127.0.0.1",
-#          "https" : "http://127.0.0.1",
-#        }
-#push_service = FCMNotification(api_key="<api-key>", proxy_dict=proxy_dict)
 
-# Your api-key can be gotten from:  https://console.firebase.google.com/project/<project-name>/settings/cloudmessaging
-
-#registration_id = "e1b4irQoyJ8:APA91bHP_1Xya_q7GfMNTrpGusIqkynL3Jyn_aALYG3z6MmXG5unqSuZCSidVd82BEVvQdfTUV3g2b_ug5leqlVvmWrrPYh4jwqvh2qvS2MHQG3PJZMJptWwOFuj5vrdT-N7XqFgnn9z"
-#message_title = "Uber update"
-#message_body = "Hi john, your customized news for today is ready"
-#send_notification("hello","Helloworld",registration_id)
 
 def sms(message,number):   
     username = "9591254802"
