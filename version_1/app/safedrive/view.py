@@ -14,7 +14,7 @@ import time
 from bokeh.models.sources import ColumnDataSource
 from bokeh.models import (HoverTool, FactorRange, Plot, LinearAxis, Grid,
                           Range1d)
-from notify import send_notification,sms
+from notify import send_notification,sms,sendsms
 import urllib2
 import cookielib
 import collections
@@ -227,7 +227,7 @@ def result():
     #send_notification(msg_head,msg_body,reg_id)
     msg = "SAFE DRIVE\n\n"+user.username + " is not in a condition to drive.\n"+"please pick him up\n"+"You can track his location at below link\n"
     msg = msg+"http://maps.google.com/?q="+str(latitude)+","+str(longitude)
-    sms(msg,user.emergency_no)
+    sendsms(msg,user.emergency_no)
     return 'Success'
     
 @safedrive.route('/user/token')

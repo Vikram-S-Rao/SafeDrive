@@ -19,7 +19,7 @@ class User(UserMixin,database.Model):
     age = database.Column(database.Integer)
     gender = database.Column(database.String(10))
     phone_no = database.Column(database.String(10))
-    emergency_no = database.Column(database.String(10))
+    emergency_no = database.Column(database.String(64))
     address = database.Column(database.String(128))
     admin = database.Column(database.Boolean) 
     avatar_hash = database.Column(database.String(32))

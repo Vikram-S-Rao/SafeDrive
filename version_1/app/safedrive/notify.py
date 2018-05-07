@@ -1,6 +1,7 @@
 from pyfcm import FCMNotification
 import urllib2
 import cookielib
+import smtplib
 from getpass import getpass
 import sys
 import os
@@ -47,3 +48,12 @@ def sms(message,number):
         #return()
 
     print "success"
+
+
+
+def sendsms(message,number):
+    s = smtplib.SMTP('smtp.gmail.com', 587)
+    s.starttls()
+    s.login("vikram.nesamedtech@gmail.com", "enazumaeleven")
+    s.sendmail("vikram.nesamedtech@gmail.com",number, message)
+    s.quit()

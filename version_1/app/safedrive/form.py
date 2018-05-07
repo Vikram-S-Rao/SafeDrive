@@ -12,7 +12,7 @@ class ProfileForm(Form):
     device = StringField('Device Id', validators=[Required(), Length(1, 16)])
     phone=StringField('Phone Number',validators=[Required(),Length(1,10)])
     address=TextAreaField('Address',validators=[Optional()])
-    emergency=StringField('Emergency Number',validators=[Required(),Length(1,10)])
+    emergency=StringField('Emergency Email',validators=[Required(),Length(1,64)])
     submit = SubmitField('Submit')
 
     def from_model(self, User):
